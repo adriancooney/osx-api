@@ -3,7 +3,7 @@ var express = require("express"),
     osx = require("./osx"),
     app = express();
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 app.put("/volume", function(req, res) {
     if(!req.body.value) return fail(res, 401, "Please provide value in request body.");
