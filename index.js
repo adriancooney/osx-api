@@ -21,9 +21,9 @@ app.put("/volume", function(req, res) {
 
     if(relative) {
         value *= relative;
-        osx.adjustVolume(value);
+        osx.adjustVolume(value, success.bind(null, res));
     } else {
-        osx.setVolume(value);
+        osx.setVolume(value, success.bind(null, res));
     }
 });
 
