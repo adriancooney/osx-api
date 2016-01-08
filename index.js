@@ -12,18 +12,29 @@ app.put("/volume", function(req, res) {
         relative = false;
 
     if(["-", "+"].indexOf(value[0]) !== -1) {
-        value = value.substr(1);
         relative = value[0] == "-" ? -1 : 1;
+        value = value.substr(1);
     }
 
     value = parseInt(value);
     if(isNaN(value)) return fail(res, 401, "Invalid value.");
 
+    function onchange(err, result, log) {
+        if(err) return fail(res, 500, "Unable to change volume.");
+
+        osx.getVolume(function(err, settings, log) {
+            if(err) return fail(res, 500, err);
+
+            respond(res, 200, settings);
+        });
+    }
+
     if(relative) {
         value *= relative;
-        osx.adjustVolume(value, success.bind(null, res));
+        console.log("Adjusting volume by %d.", value)
+        osx.adjustVolume(value, onchange);
     } else {
-        osx.setVolume(value, success.bind(null, res));
+        osx.setVolume(value, onchange);
     }
 });
 
@@ -44,6 +55,7 @@ function success(res) {
 }
 
 function fail(res, code, reason) {
+    if(reason instanceof Error) reason = reason.message;
     respond(res, code, { error: reason });
 }
 
