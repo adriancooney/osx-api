@@ -36,7 +36,7 @@ osx.getVolume = wrapFunction(function() {
     var app = Application.currentApplication();
     app.includeStandardAdditions = true;
 
-    return app.getVolumeSettings()
+    return app.getVolumeSettings(); 
 });
 
 /**

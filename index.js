@@ -8,7 +8,7 @@ app.use(bodyParser.json());
 app.put("/volume", function(req, res) {
     if(!req.body.value) return fail(res, 401, "Please provide value in request body.");
 
-    var value = req.body.value,
+    var value = req.body.value.toString(),
         relative = false;
 
     if(["-", "+"].indexOf(value[0]) !== -1) {
@@ -20,7 +20,7 @@ app.put("/volume", function(req, res) {
     if(isNaN(value)) return fail(res, 401, "Invalid value.");
 
     function onchange(err, result, log) {
-        if(err) return fail(res, 500, "Unable to change volume.");
+        if(err) return fail(res, 500, err);
 
         osx.getVolume(function(err, settings, log) {
             if(err) return fail(res, 500, err);
@@ -34,6 +34,7 @@ app.put("/volume", function(req, res) {
         console.log("Adjusting volume by %d.", value)
         osx.adjustVolume(value, onchange);
     } else {
+        console.log("Setting volumeto %d.", value);
         osx.setVolume(value, onchange);
     }
 });
