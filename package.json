@@ -1,0 +1,22 @@
+{
+  "name": "osx-api",
+  "version": "1.0.0",
+  "description": "A simple REST API to control osx from afar.",
+  "main": "index.js",
+  "dependencies": {
+    "body-parser": "^1.14.2",
+    "express": "^4.13.3",
+    "osa": "^2.3.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "keywords": [
+    "osx",
+    "api"
+  ],
+  "author": "Adrian Cooney <cooney.adrian@gmail.com>",
+  "license": "MIT"
+}
